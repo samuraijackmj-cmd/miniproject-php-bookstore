@@ -1,0 +1,5 @@
+/uploads/
+/config/
+/vendor/
+*.log
+.env
