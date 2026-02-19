@@ -1,32 +1,49 @@
-# Mini Project - PHP Bookstore
+📚 Mini Project: Online Bookstore
+โปรเจคนี้เป็นระบบร้านขายหนังสือออนไลน์ พัฒนาโดยใช้ PHP + MySQL
+เป็นโปรเจคสำหรับฝึกทำระบบ Web Application แบบครบวงจร
 
-## 📌 Project Description
-This is a mini project developed using PHP and MySQL.
-The system is an online bookstore with full CRUD functionality and authentication system.
+🔧 ฟีเจอร์หลัก
+-สมัครสมาชิก / เข้าสู่ระบบ
+-แสดงรายการหนังสือ
+-เพิ่มสินค้าใส่ตะกร้า
+-ระบบสั่งซื้อสินค้า
+-ประวัติการสั่งซื้อ
+-ระบบ Wishlist
+-ระบบหลังบ้าน (Admin Panel)
+-จัดการหนังสือ
+-จัดการหมวดหมู่
+-จัดการคำสั่งซื้อ
+-ดูรายงานยอดขาย
 
-## 🚀 Features
-- User Registration & Login
-- Admin Dashboard
-- Manage Books (CRUD)
-- Cart System
-- Checkout System
-- Order History
-- Wishlist
-- Maintenance Mode
-- Real-time Order Status
+🛠 เทคโนโลยีที่ใช้
+-PHP (Core PHP)
+-MySQL
+-HTML / CSS
+-JavaScript
+-AJAX
+-XAMPP (สำหรับรันในเครื่อง)
 
-## 🛠 Technologies Used
-- PHP (Core PHP)
-- MySQL
-- HTML / CSS
-- JavaScript
-- XAMPP
+⚙ วิธีติดตั้ง
+Clone โปรเจค
+git clone https://github.com/samuraijackmj-cmd/miniproject-php-bookstore.git
 
-## 🖥 Installation Guide
-1. Clone the repository
-2. Import the database into phpMyAdmin
-3. Configure database connection in `config/db.php`
-4. Run the project in XAMPP (localhost)
+ย้ายไปไว้ใน
+C:\xampp\htdocs\
+สร้างฐานข้อมูลใน phpMyAdmin
+Import ไฟล์ SQL
+แก้ไฟล์เชื่อมต่อฐานข้อมูลในโฟลเดอร์ config
 
-## 👨‍💻 Author
-Samuraijackmj
+เข้าใช้งานที่
+http://localhost/bookstore
+
+📌 จุดประสงค์ของโปรเจคนี้
+-ฝึกทำ CRUD
+-ฝึกการเชื่อมต่อฐานข้อมูล
+-ฝึกจัดโครงสร้างไฟล์
+-ฝึกเขียนระบบ Login / Session
+-ฝึกทำระบบ E-Commerce เบื้องต้น
+
+👨‍💻 ผู้พัฒนา
+
+Samuraijackmj-cmd
+นักศึกษาที่กำลังฝึกพัฒนา Web Application 
