@@ -11,7 +11,7 @@ die("<h2>🔒 ไฟล์นี้ถูกปิดใช้งานแล้
 require_once 'config/db.php';
 
 $user = 'admin';
-$pass = 'Admin@2024!'; // เปลี่ยน password ก่อนใช้!
+$pass = 'YOUR_PASSWORD_HERE'; // ⚠️ เปลี่ยนเป็น password ที่ต้องการก่อนรัน!
 $role = 'admin';
 
 $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
@@ -31,7 +31,7 @@ try {
 
     echo "<h1 style='color:green'>✅ สร้าง Admin สำเร็จ!</h1>";
     echo "<h3>Username: admin</h3>";
-    echo "<h3>Password: Admin@2024!</h3>";
+    echo "<h3>Password: (ตามที่คุณกำหนดใน \$pass)</h3>";
     echo "<p style='color:red'><strong>⚠️ กรุณาปิดไฟล์นี้ทันที!</strong></p>";
     echo "<hr>";
     echo "<a href='login.php' style='font-size:20px'>👉 คลิกเพื่อไปหน้าล็อกอิน</a>";
