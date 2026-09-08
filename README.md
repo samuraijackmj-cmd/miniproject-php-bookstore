@@ -1,20 +1,51 @@
-# 📚 Bookstore - ระบบร้านหนังสือออนไลน์
+# 📚 Mini Project: Online Bookstore
 
-ระบบจัดการร้านหนังสือออนไลน์พัฒนาด้วย PHP + MySQL
+ระบบร้านขายหนังสือออนไลน์พัฒนาโดยใช้ PHP และ MySQL  
+เป็นโปรเจคสำหรับฝึกทำ Web Application แบบครบวงจร
 
-## 🛠️ Requirements
+---
+
+## 🔧 ฟีเจอร์หลัก
+
+- สมัครสมาชิก / เข้าสู่ระบบ
+- แสดงรายการหนังสือ
+- เพิ่มสินค้าใส่ตะกร้า
+- ระบบสั่งซื้อสินค้า
+- ประวัติการสั่งซื้อ
+- ระบบ Wishlist
+- ระบบหลังบ้าน (Admin Panel)
+  - จัดการหนังสือ
+  - จัดการหมวดหมู่
+  - จัดการคำสั่งซื้อ
+  - รายงานยอดขาย
+
+---
+
+## 🛠 เทคโนโลยีที่ใช้
+
+- PHP (Core PHP)
+- MySQL
+- HTML / CSS
+- JavaScript / AJAX
+- XAMPP
+
+---
+
+## ⚙ Requirements
 
 - PHP 8.0+
 - MySQL 5.7+ / MariaDB 10.4+
 - XAMPP / WAMP / LAMP
 
+---
+
 ## 🚀 วิธีติดตั้ง
 
 1. **Clone โปรเจกต์**
    ```bash
-   git clone https://github.com/your-username/bookstore.git
+   git clone https://github.com/samuraijackmj-cmd/miniproject-php-bookstore.git
    ```
-   แล้ววางไว้ใน `htdocs/` ของ XAMPP
+   แล้ววางไว้ใน `C:\xampp\htdocs\`
 
 2. **ตั้งค่า Database**
    - เปิด phpMyAdmin → `http://localhost/phpmyadmin`
@@ -37,12 +68,16 @@
    http://localhost/bookstore/
    ```
 
+---
+
 ## 🔑 Default Admin
 
 | Field | Value |
 |-------|-------|
 | Username | admin |
 | Password | *(ดูใน reset_admin.php)* |
+
+---
 
 ## 📁 โครงสร้างโปรเจกต์
 
@@ -56,7 +91,41 @@ bookstore/
 └── index.php       # หน้าแรก
 ```
 
+---
+
 ## ⚠️ หมายเหตุความปลอดภัย
 
 - ไฟล์ `config/db.php` และ `uploads/` จะไม่ถูก push ขึ้น GitHub (อยู่ใน .gitignore)
 - ลบหรือปิด `reset_admin.php` หลังจาก setup เสร็จแล้ว
+
+---
+
+## 📸 Screenshots
+
+### 🏠 หน้าแรก
+![Home](Screenshot%202026-02-20%20001749.png)
+
+### 🔐 หน้า Login
+![Login](Screenshot%202026-02-20%20001804.png)
+
+### 📝 หน้า Register
+![Register](Screenshot%202026-02-20%20001756.png)
+
+### 🛠️ Admin Dashboard
+![Admin](Screenshot%202026-02-20%20001817.png)
+
+---
+
+## 🎯 จุดประสงค์ของโปรเจค
+
+- ฝึกทำ CRUD
+- ฝึกเชื่อมต่อฐานข้อมูล
+- ฝึกเขียนระบบ Login / Session
+- ฝึกทำระบบ E-Commerce เบื้องต้น
+
+---
+
+## 👨‍💻 ผู้พัฒนา
+
+Samuraijackmj-cmd  
+นักศึกษาที่กำลังฝึกพัฒนา Web Application
