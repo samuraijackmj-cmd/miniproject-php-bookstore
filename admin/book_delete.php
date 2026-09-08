@@ -8,6 +8,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
 }
 
 require_once '../config/db.php';
+require_once '../includes/csrf_helper.php';
+csrf_generate();
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = $_GET['id'];
@@ -32,7 +34,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         }
     } catch (PDOException $e) {
         // กรณีเกิด Error (เช่น มีข้อมูลผูกกับตารางอื่น) ให้เด้งเตือน
-        echo "<script>alert('ไม่สามารถลบได้: " . $e->getMessage() . "'); window.location='books.php';</script>";
+        echo "<script>alert('เกิดข้อผิดพลาดในการลบหนังสือ กรุณาลองใหม่อีกครั้ง'); window.location='books.php';</script>";
+        error_log('book_delete error: ' . $e->getMessage());
         exit;
     }
 }

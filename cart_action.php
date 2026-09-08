@@ -13,6 +13,8 @@ error_reporting(E_ALL);
 header('Content-Type: application/json; charset=utf-8');
 
 require_once 'config/db.php';
+require_once 'includes/csrf_helper.php';
+csrf_generate();
 
 // เช็คว่า User Login อยู่ไหม
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;

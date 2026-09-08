@@ -5,6 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     exit;
 }
 require_once '../config/db.php';
+require_once '../includes/csrf_helper.php';
+csrf_generate();
 
 $user_id = $_SESSION['user_id'];
 $msg = "";
@@ -16,6 +18,7 @@ $total_alerts = $pending_orders_count + $low_stock_count;
 
 // --- [LOGIC] 2. Handle Form Submit ---
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    csrf_verify();
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $new_password = $_POST['new_password'];
@@ -276,7 +279,7 @@ $admin = $stmt->fetch();
                 <div class="avatar-lg">
                     <i class="bi bi-person-fill"></i>
                 </div>
-                <h4 class="fw-bold mb-1"><?php echo htmlspecialchars($admin['username']); ?></h4>
+                <h4 class="fw-bold mb-1"><?php echo htmlspecialchars($admin['username'], ENT_QUOTES, 'UTF-8'); ?></h4>
                 <p class="text-muted small">Administrator</p>
                 <div class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25 rounded-pill px-3 py-2 mb-4">
                     <i class="bi bi-shield-check me-1"></i> Super Admin
@@ -289,7 +292,7 @@ $admin = $stmt->fetch();
                         <div class="bg-white bg-opacity-10 p-2 rounded-circle me-3"><i class="bi bi-envelope text-white"></i></div>
                         <div>
                             <div class="small text-muted">Email Address</div>
-                            <div class="fw-bold"><?php echo htmlspecialchars($admin['email']); ?></div>
+                            <div class="fw-bold"><?php echo htmlspecialchars($admin['email'], ENT_QUOTES, 'UTF-8'); ?></div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
@@ -312,14 +315,15 @@ $admin = $stmt->fetch();
                 <?php echo $msg; ?>
 
                 <form method="POST">
+    <?= csrf_field() ?>
                     <div class="row g-4">
                         <div class="col-md-6">
                             <label class="form-label text-muted">Username</label>
-                            <input type="text" name="username" class="form-control" value="<?php echo htmlspecialchars($admin['username']); ?>" required>
+                            <input type="text" name="username" class="form-control" value="<?php echo htmlspecialchars($admin['username'], ENT_QUOTES, 'UTF-8'); ?>" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label text-muted">Email</label>
-                            <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($admin['email']); ?>" required>
+                            <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($admin['email'], ENT_QUOTES, 'UTF-8'); ?>" required>
                         </div>
                     </div>
 

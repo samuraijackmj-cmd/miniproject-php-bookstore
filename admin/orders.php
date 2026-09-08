@@ -189,7 +189,7 @@ $orders = $stmt->fetchAll();
                     <span class="input-group-text bg-transparent border-end-0 border-secondary text-muted" style="border-radius: 50px 0 0 50px;">
                         <i class="bi bi-search"></i>
                     </span>
-                    <input type="text" name="search" id="searchInput" class="form-control form-control-glass border-start-0" placeholder="Search by Order ID, Customer Name..." value="<?php echo htmlspecialchars($search); ?>" style="border-radius: 0 50px 50px 0;">
+                    <input type="text" name="search" id="searchInput" class="form-control form-control-glass border-start-0" placeholder="Search by Order ID, Customer Name..." value="<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>" style="border-radius: 0 50px 50px 0;">
                 </div>
             </div>
             <div class="col-md-4">
@@ -231,19 +231,19 @@ $orders = $stmt->fetchAll();
                         elseif (stripos($status, 'ชำระเงิน') !== false || stripos($status, 'paid') !== false) { $badge_class = 'st-primary'; $status_text = 'ชำระเงินแล้ว'; }
                     ?>
                     <tr>
-                        <td class="ps-4"><span class="order-id-badge"><?php echo !empty($order['order_number']) ? htmlspecialchars($order['order_number']) : '#ORD-'.str_pad($order['order_id'], 5, '0', STR_PAD_LEFT); ?></span></td>
+                        <td class="ps-4"><span class="order-id-badge"><?php echo !empty($order['order_number']) ? htmlspecialchars($order['order_number'], ENT_QUOTES, 'UTF-8') : '#ORD-'.str_pad($order['order_id'], 5, '0', STR_PAD_LEFT); ?></span></td>
                         <td>
                             <div class="d-flex align-items-center gap-3">
                                 <div class="rounded-circle bg-white bg-opacity-10 d-flex align-items-center justify-content-center border border-secondary" style="width:36px;height:36px;">
                                     <span class="text-white small fw-bold"><?php echo strtoupper(substr($order['username'] ?? 'U', 0, 1)); ?></span>
                                 </div>
-                                <div><div class="fw-bold text-white small"><?php echo htmlspecialchars($order['full_name'] ?? 'Guest'); ?></div><div class="text-muted" style="font-size:0.75rem;">@<?php echo htmlspecialchars($order['username']); ?></div></div>
+                                <div><div class="fw-bold text-white small"><?php echo htmlspecialchars($order['full_name'] ?? 'Guest', ENT_QUOTES, 'UTF-8'); ?></div><div class="text-muted" style="font-size:0.75rem;">@<?php echo htmlspecialchars($order['username'], ENT_QUOTES, 'UTF-8'); ?></div></div>
                             </div>
                         </td>
                         <td class="text-muted small"><i class="bi bi-calendar3 me-1"></i> <?php echo date('d M Y', strtotime($order['created_at'])); ?><br><i class="bi bi-clock me-1"></i> <?php echo date('H:i', strtotime($order['created_at'])); ?></td>
                         <td class="fw-bold text-white">฿<?php echo number_format($order['total_amount'], 2); ?></td>
                         <td><span class="status-badge <?php echo $badge_class; ?>"><?php echo $status_text; ?></span></td>
-                        <td class="text-end pe-4"><a href="order_detail.php?id=<?php echo $order['order_id']; ?>" class="btn-action" title="View Details"><i class="bi bi-eye"></i></a></td>
+                        <td class="text-end pe-4"><a href="order_detail.php?id=<?php echo htmlspecialchars($order['order_id'], ENT_QUOTES, 'UTF-8'); ?>" class="btn-action" title="View Details"><i class="bi bi-eye"></i></a></td>
                     </tr>
                     <?php endforeach; else: ?>
                     <tr><td colspan="6" class="text-center py-5 text-muted"><i class="bi bi-box-seam fs-1 d-block mb-3"></i>No orders found.</td></tr>
@@ -275,8 +275,8 @@ $orders = $stmt->fetchAll();
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('show'); }
 
     // --- ✅ REALTIME SCRIPT (Fixed Cache) ---
-    let searchVal = "<?php echo htmlspecialchars($search); ?>";
-    let statusVal = "<?php echo htmlspecialchars($status_filter); ?>";
+    let searchVal = "<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>";
+    let statusVal = "<?php echo htmlspecialchars($status_filter, ENT_QUOTES, 'UTF-8'); ?>";
 
     function fetchOrders() {
         // 1. แนบ Timestamp เพื่อกัน Browser Cache

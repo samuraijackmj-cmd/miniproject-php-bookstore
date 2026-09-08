@@ -3,6 +3,8 @@
 date_default_timezone_set('Asia/Bangkok'); 
 session_start();
 require_once 'config/db.php';
+require_once 'includes/csrf_helper.php';
+csrf_generate();
 
 // ถ้าล็อกอิน Admin ค้างไว้อยู่แล้ว ให้ส่งไปหลังบ้านเลย
 if (isset($_SESSION['user_id']) && ($_SESSION['role'] ?? '') === 'admin') {
@@ -20,6 +22,7 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    csrf_verify();
     // --- 🔵 Logic: Login ---
     if (isset($_POST['login'])) {
         $username = trim($_POST['username']);
@@ -153,6 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container" id="main-container">
         <div class="form-container sign-up-container">
             <form method="POST">
+                <?= csrf_field() ?>
                 <h3 class="text-white mb-2 fw-bold">สร้างบัญชีใหม่</h3>
                 <?php if(!empty($error) && isset($_POST['register'])): ?><div class="text-danger small mb-2"><?php echo $error; ?></div><?php endif; ?>
                 <div class="input-group-custom"><i class="fas fa-id-card input-icon"></i><input type="text" name="full_name" class="form-control" placeholder="ชื่อ-นามสกุล" required></div>

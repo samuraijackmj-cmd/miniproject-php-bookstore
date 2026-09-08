@@ -114,9 +114,9 @@ foreach($chart_query as $row) {
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex align-items-center">
                                         <span class="badge bg-light text-dark me-2"><?php echo $index+1; ?></span>
-                                        <span class="text-truncate fw-500" style="max-width: 150px;"><?php echo $book['title']; ?></span>
+                                        <span class="text-truncate fw-500" style="max-width: 150px;"><?php echo htmlspecialchars($book['title'], ENT_QUOTES, 'UTF-8'); ?></span>
                                     </div>
-                                    <span class="badge rounded-pill bg-info text-dark"><?php echo $book['total_qty']; ?> เล่ม</span>
+                                    <span class="badge rounded-pill bg-info text-dark"><?php echo htmlspecialchars($book['total_qty'], ENT_QUOTES, 'UTF-8'); ?> เล่ม</span>
                                 </div>
                                 <div class="progress mt-2" style="height: 5px;">
                                     <div class="progress-bar" style="width: <?php echo ($book['total_qty'] / $top_books[0]['total_qty']) * 100; ?>%"></div>

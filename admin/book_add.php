@@ -5,6 +5,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     exit; 
 }
 require_once '../config/db.php';
+require_once '../includes/csrf_helper.php';
+csrf_generate();
 
 // ดึงหมวดหมู่มาใส่ใน Select Box
 $cats = $conn->query("SELECT * FROM categories ORDER BY category_name ASC")->fetchAll();
@@ -18,6 +20,7 @@ $low_stock_count = $conn->query("SELECT COUNT(*) FROM books WHERE stock_quantity
 $total_alerts = $pending_orders + $low_stock_count;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    csrf_verify();
     $isbn = trim($_POST['isbn']); // รับค่า ISBN
     $title = trim($_POST['title']);
     $author = trim($_POST['author']);
@@ -336,6 +339,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="glass-card">
         <form method="POST" enctype="multipart/form-data">
+    <?= csrf_field() ?>
             <div class="row g-5">
                 <div class="col-lg-8">
                     <h5 class="mb-4 d-flex align-items-center text-white">
@@ -352,7 +356,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <select name="category_id" class="form-select" required>
                                 <option value="" disabled selected>เลือกหมวดหมู่</option>
                                 <?php foreach($cats as $c): ?>
-                                    <option value="<?php echo $c['category_id']; ?>"><?php echo htmlspecialchars($c['category_name']); ?></option>
+                                    <option value="<?php echo htmlspecialchars($c['category_id'], ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($c['category_name'], ENT_QUOTES, 'UTF-8'); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

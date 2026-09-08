@@ -6,6 +6,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     exit; 
 }
 require_once '../config/db.php';
+require_once '../includes/csrf_helper.php';
+csrf_generate();
 
 // --- [LOGIC] ดึงข้อมูลสถิติ Notification ---
 $low_stock_count = $conn->query("SELECT COUNT(*) FROM books WHERE stock_quantity < 5")->fetchColumn();

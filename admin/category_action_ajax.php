@@ -4,6 +4,8 @@ ob_start();
 
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 require_once '../config/db.php';
+require_once '../includes/csrf_helper.php';
+csrf_generate();
 
 // ล้าง Buffer ก่อนส่ง Header
 ob_end_clean();

@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once 'config/db.php';
+require_once 'includes/csrf_helper.php';
+csrf_generate();
 
 // 1. ตรวจสอบว่าล็อกอินหรือยัง
 if (!isset($_SESSION['user_id'])) {
@@ -14,6 +16,7 @@ $error = "";
 
 // 2. Logic การบันทึกข้อมูลเมื่อกดปุ่ม
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    csrf_verify();
     $full_name = trim($_POST['full_name']);
     $email = trim($_POST['email']);
     $phone = trim($_POST['phone']);
@@ -203,6 +206,7 @@ $user = $stmt->fetch();
                     <?php endif; ?>
 
                     <form method="POST">
+    <?= csrf_field() ?>
                         <div class="row g-3">
                             <div class="col-12"><h5 class="text-white mb-3 mt-2"><i class="bi bi-person me-2"></i>ข้อมูลพื้นฐาน</h5></div>
                             

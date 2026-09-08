@@ -4,6 +4,8 @@ date_default_timezone_set('Asia/Bangkok');
 
 session_start();
 require_once 'config/db.php';
+require_once 'includes/csrf_helper.php';
+csrf_generate();
 
 $message = '';
 $error = '';
@@ -27,6 +29,7 @@ try {
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        csrf_verify();
         $new_pass = $_POST['password'];
         $confirm_pass = $_POST['confirm_password'];
 
@@ -141,6 +144,7 @@ try {
         <?php if($error): ?><div class="error-msg text-center"><?php echo $error; ?></div><?php endif; ?>
 
         <form method="POST">
+            <?= csrf_field() ?>
             <div class="input-group-custom">
                 <i class="fas fa-lock input-icon"></i>
                 <input type="password" name="password" id="pass" class="form-control" placeholder="รหัสผ่านใหม่" required>

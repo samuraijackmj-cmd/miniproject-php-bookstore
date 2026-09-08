@@ -6,6 +6,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     exit;
 }
 require_once '../config/db.php';
+require_once '../includes/csrf_helper.php';
+csrf_generate();
 
 // --- [LOGIC] 1. ระบบแจ้งเตือน (คงเดิม) ---
 $low_stock_count = $conn->query("SELECT COUNT(*) FROM books WHERE stock_quantity < 5")->fetchColumn();
@@ -16,6 +18,7 @@ $msg = "";
 
 // --- [LOGIC] 2. ตรวจสอบการกดปุ่มบันทึก (INSERT or UPDATE) ---
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    csrf_verify();
     $site_name = trim($_POST['site_name']);
     $contact_email = trim($_POST['contact_email']);
     $shipping_fee = floatval($_POST['shipping_fee']);
@@ -109,17 +112,18 @@ if (!$settings) {
     <?php if(!empty($msg)) echo $msg; ?>
 
     <form method="POST">
+    <?= csrf_field() ?>
         <div class="row g-4">
             <div class="col-md-6">
                 <div class="glass-card h-100">
                     <h5 class="fw-bold mb-4 text-info"><i class="bi bi-sliders me-2"></i>ข้อมูลทั่วไป</h5>
                     <div class="mb-3">
                         <label class="form-label text-white small">ชื่อร้านค้า (Site Title)</label>
-                        <input type="text" name="site_name" class="form-control" value="<?php echo htmlspecialchars($settings['site_name']); ?>" required>
+                        <input type="text" name="site_name" class="form-control" value="<?php echo htmlspecialchars($settings['site_name'], ENT_QUOTES, 'UTF-8'); ?>" required>
                     </div>
                     <div class="mb-4">
                         <label class="form-label text-white small">อีเมลติดต่อ (Contact Email)</label>
-                        <input type="email" name="contact_email" class="form-control" value="<?php echo htmlspecialchars($settings['contact_email']); ?>" required>
+                        <input type="email" name="contact_email" class="form-control" value="<?php echo htmlspecialchars($settings['contact_email'], ENT_QUOTES, 'UTF-8'); ?>" required>
                     </div>
                     <hr class="border-secondary opacity-25 my-4">
                     <div class="form-check form-switch d-flex align-items-center gap-3">
@@ -136,7 +140,7 @@ if (!$settings) {
                         <label class="form-label text-white small">ค่าจัดส่งมาตรฐาน (บาท)</label>
                         <div class="input-group">
                             <span class="input-group-text bg-transparent border-secondary text-white">฿</span>
-                            <input type="number" name="shipping_fee" class="form-control" value="<?php echo $settings['shipping_fee']; ?>" required>
+                            <input type="number" name="shipping_fee" class="form-control" value="<?php echo htmlspecialchars($settings['shipping_fee'], ENT_QUOTES, 'UTF-8'); ?>" required>
                         </div>
                     </div>
                     <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03);">

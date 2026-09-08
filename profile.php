@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once 'config/db.php';
+require_once 'includes/csrf_helper.php';
+csrf_generate();
 
 // ตรวจสอบ Login
 if (!isset($_SESSION['user_id'])) {
@@ -14,6 +16,7 @@ $error = "";
 
 // --- 1. Logic การบันทึกข้อมูลส่วนตัว (ปรับปรุงเพื่อรองรับการเปลี่ยนเมล) ---
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
+    csrf_verify();
     $full_name = trim($_POST['full_name']);
     $email = trim($_POST['email']);
     $image_name = $_POST['old_image']; 
@@ -138,6 +141,7 @@ $user = $stmt->fetch();
 
     <div class="container py-5">
         <form action="" method="POST" enctype="multipart/form-data">
+            <?= csrf_field() ?>
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-md-7">
                     

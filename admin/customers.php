@@ -277,7 +277,7 @@ $total_customers = $conn->query("SELECT COUNT(*) FROM users WHERE role != 'admin
                         <span class="input-group-text bg-transparent border-end-0 border-secondary text-muted" style="border-radius: 50px 0 0 50px;">
                             <i class="bi bi-search"></i>
                         </span>
-                        <input type="text" name="search" class="form-control form-control-glass border-start-0" placeholder="ค้นหาชื่อ, อีเมล หรือเบอร์โทร..." value="<?php echo htmlspecialchars($search); ?>" style="border-radius: 0 50px 50px 0;">
+                        <input type="text" name="search" class="form-control form-control-glass border-start-0" placeholder="ค้นหาชื่อ, อีเมล หรือเบอร์โทร..." value="<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>" style="border-radius: 0 50px 50px 0;">
                     </div>
                 </form>
             </div>
@@ -304,16 +304,16 @@ $total_customers = $conn->query("SELECT COUNT(*) FROM users WHERE role != 'admin
                                     <?php echo strtoupper(substr($cus['username'], 0, 1)); ?>
                                 </div>
                                 <div>
-                                    <div class="fw-bold text-white"><?php echo htmlspecialchars($cus['full_name'] ?? $cus['username']); ?></div>
-                                    <div class="text-muted small">@<?php echo htmlspecialchars($cus['username']); ?></div>
+                                    <div class="fw-bold text-white"><?php echo htmlspecialchars($cus['full_name'] ?? $cus['username'], ENT_QUOTES, 'UTF-8'); ?></div>
+                                    <div class="text-muted small">@<?php echo htmlspecialchars($cus['username'], ENT_QUOTES, 'UTF-8'); ?></div>
                                 </div>
                             </div>
                         </td>
                         <td>
                             <div class="d-flex flex-column gap-1">
-                                <span class="small text-white-50"><i class="bi bi-envelope me-2"></i><?php echo htmlspecialchars($cus['email']); ?></span>
+                                <span class="small text-white-50"><i class="bi bi-envelope me-2"></i><?php echo htmlspecialchars($cus['email'], ENT_QUOTES, 'UTF-8'); ?></span>
                                 <?php if (!empty($cus['phone'])): ?>
-                                    <span class="small text-white-50"><i class="bi bi-telephone me-2"></i><?php echo htmlspecialchars($cus['phone']); ?></span>
+                                    <span class="small text-white-50"><i class="bi bi-telephone me-2"></i><?php echo htmlspecialchars($cus['phone'], ENT_QUOTES, 'UTF-8'); ?></span>
                                 <?php endif; ?>
                             </div>
                         </td>

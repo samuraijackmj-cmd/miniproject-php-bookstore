@@ -1,6 +1,8 @@
 <?php
 session_start();
-require_once 'config/db.php'; 
+require_once 'config/db.php';
+require_once 'includes/csrf_helper.php';
+csrf_generate(); 
 
 if (!isset($_SESSION['user_id']) || !isset($_GET['id'])) { header("Location: order_history.php"); exit; }
 

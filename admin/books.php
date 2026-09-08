@@ -321,7 +321,7 @@ $total_alerts = $pending_orders_count + $low_stock_count;
                 <select id="catFilter" class="form-select form-select-glass" style="max-width: 200px;" onchange="fetchBooks()">
                     <option value="">ทุกหมวดหมู่</option>
                     <?php foreach($categories as $cat): ?>
-                        <option value="<?= $cat['category_id'] ?>"><?= htmlspecialchars($cat['category_name']) ?></option>
+                        <option value="<?= htmlspecialchars($cat['category_id'], ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8') ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

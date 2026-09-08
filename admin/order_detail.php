@@ -6,6 +6,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     exit;
 }
 require_once '../config/db.php';
+require_once '../includes/csrf_helper.php';
+csrf_generate();
 
 if (!isset($_GET['id'])) { 
     header("Location: orders.php"); 
@@ -21,6 +23,7 @@ $total_alerts = $pending_orders_count + $low_stock_count;
 
 // --- [LOGIC] 2. อัปเดตออเดอร์และบันทึก Log ---
 if (isset($_POST['update_status'])) {
+    csrf_verify();
     $new_status = $_POST['status']; 
     $tracking_number = trim($_POST['tracking_number']); 
 
@@ -345,11 +348,11 @@ $logs = $stmt_logs->fetchAll();
                             <tr>
                                 <td class="ps-4">
                                     <div class="d-flex align-items-center gap-3">
-                                        <img src="../uploads/<?php echo $item['image']; ?>" class="rounded" style="width:40px; height:55px; object-fit:cover;">
-                                        <span class="text-white"><?php echo htmlspecialchars($item['title']); ?></span>
+                                        <img src="../uploads/<?php echo htmlspecialchars($item['image'], ENT_QUOTES, 'UTF-8'); ?>" class="rounded" style="width:40px; height:55px; object-fit:cover;">
+                                        <span class="text-white"><?php echo htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8'); ?></span>
                                     </div>
                                 </td>
-                                <td class="text-center text-muted">x<?php echo $item['quantity']; ?></td>
+                                <td class="text-center text-muted">x<?php echo htmlspecialchars($item['quantity'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td class="text-end pe-4 text-white fw-bold">฿<?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
                             </tr>
                             <?php endforeach; ?>
@@ -373,12 +376,12 @@ $logs = $stmt_logs->fetchAll();
                         <?php foreach ($logs as $log): ?>
                         <div class="log-item">
                             <div class="d-flex justify-content-between">
-                                <span class="text-white fw-bold"><?php echo $log['new_status']; ?></span>
+                                <span class="text-white fw-bold"><?php echo htmlspecialchars($log['new_status'], ENT_QUOTES, 'UTF-8'); ?></span>
                                 <span class="text-muted small"><?php echo date('d/m/Y H:i', strtotime($log['created_at'])); ?></span>
                             </div>
                             <div class="small text-muted mt-1">
-                                เปลี่ยนจาก <span class="text-white-50"><?php echo $log['old_status']; ?></span> 
-                                โดย <i class="bi bi-person-fill ms-1"></i> <?php echo htmlspecialchars($log['changed_by']); ?>
+                                เปลี่ยนจาก <span class="text-white-50"><?php echo htmlspecialchars($log['old_status'], ENT_QUOTES, 'UTF-8'); ?></span> 
+                                โดย <i class="bi bi-person-fill ms-1"></i> <?php echo htmlspecialchars($log['changed_by'], ENT_QUOTES, 'UTF-8'); ?>
                             </div>
                         </div>
                         <?php endforeach; ?>
@@ -392,6 +395,7 @@ $logs = $stmt_logs->fetchAll();
             <div class="glass-card border-top border-4 border-primary">
                 <h5 class="fw-bold mb-4 text-white">จัดการสถานะ</h5>
                 <form method="POST">
+    <?= csrf_field() ?>
                     <div class="mb-3">
                         <label class="form-label text-muted">สถานะปัจจุบัน</label>
                         <select name="status" id="status_dropdown" class="form-select form-select-glass" onchange="checkStatus(this.value)">
@@ -406,7 +410,7 @@ $logs = $stmt_logs->fetchAll();
                     <div id="tracking_area" class="mb-4">
                         <label class="form-label text-info">เลขพัสดุ (Tracking)</label>
                         <div class="input-group">
-                            <input type="text" name="tracking_number" id="tracking_input" class="form-control form-control-glass border-end-0" value="<?php echo htmlspecialchars($order['tracking_number'] ?? ''); ?>">
+                            <input type="text" name="tracking_number" id="tracking_input" class="form-control form-control-glass border-end-0" value="<?php echo htmlspecialchars($order['tracking_number'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                             <button class="btn btn-outline-secondary border-start-0" type="button" onclick="randomTracking()"><i class="bi bi-shuffle"></i></button>
                         </div>
                     </div>
@@ -421,16 +425,16 @@ $logs = $stmt_logs->fetchAll();
                 <h5 class="fw-bold mb-4 text-white"><i class="bi bi-person-lines-fill me-2 text-success"></i>ข้อมูลจัดส่ง</h5>
                 <div class="info-row">
                     <span class="text-muted">ชื่อผู้รับ</span>
-                    <span class="text-white text-end"><?php echo htmlspecialchars($order['fullname'] ?? $order['full_name']); ?></span>
+                    <span class="text-white text-end"><?php echo htmlspecialchars($order['fullname'] ?? $order['full_name'], ENT_QUOTES, 'UTF-8'); ?></span>
                 </div>
                 <div class="info-row">
                     <span class="text-muted">เบอร์โทร</span>
-                    <span class="text-white text-end"><?php echo htmlspecialchars($order['phone']); ?></span>
+                    <span class="text-white text-end"><?php echo htmlspecialchars($order['phone'], ENT_QUOTES, 'UTF-8'); ?></span>
                 </div>
                 <div class="mt-3">
                     <span class="text-muted d-block mb-1">ที่อยู่จัดส่ง</span>
                     <p class="text-white small m-0 bg-white bg-opacity-10 p-2 rounded">
-                        <?php echo nl2br(htmlspecialchars($order['address'] ?? $order['user_address'])); ?>
+                        <?php echo nl2br(htmlspecialchars($order['address'] ?? $order['user_address'], ENT_QUOTES, 'UTF-8')); ?>
                     </p>
                 </div>
             </div>
@@ -438,8 +442,8 @@ $logs = $stmt_logs->fetchAll();
             <div class="glass-card">
                 <h5 class="fw-bold mb-3 text-white"><i class="bi bi-receipt me-2 text-warning"></i>หลักฐานการโอน</h5>
                 <?php if (!empty($order['slip_image'])): ?>
-                    <a href="../uploads/slips/<?php echo $order['slip_image']; ?>" target="_blank" class="d-block position-relative group-hover">
-                        <img src="../uploads/slips/<?php echo $order['slip_image']; ?>" class="img-fluid rounded border border-secondary w-100" alt="Payment Slip">
+                    <a href="../uploads/slips/<?php echo htmlspecialchars($order['slip_image'], ENT_QUOTES, 'UTF-8'); ?>" target="_blank" class="d-block position-relative group-hover">
+                        <img src="../uploads/slips/<?php echo htmlspecialchars($order['slip_image'], ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid rounded border border-secondary w-100" alt="Payment Slip">
                         <div class="position-absolute top-50 start-50 translate-middle badge bg-dark bg-opacity-75">
                             <i class="bi bi-zoom-in me-1"></i> ดูรูปใหญ่
                         </div>

@@ -7,6 +7,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
 }
 
 require_once '../config/db.php';
+require_once '../includes/csrf_helper.php';
+csrf_generate();
 
 // ตรวจสอบ ID
 if (!isset($_GET['id'])) { header("Location: books.php"); exit; }
@@ -25,6 +27,7 @@ $msg_error = "";
 
 // --- ส่วนทำงานเมื่อกดบันทึก ---
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    csrf_verify();
     $isbn = trim($_POST['isbn']);
     $title = trim($_POST['title']);
     $author = trim($_POST['author']);
@@ -166,20 +169,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
         <form method="POST" enctype="multipart/form-data">
+    <?= csrf_field() ?>
             <div class="row g-5">
                 <div class="col-lg-8">
                     <div class="row g-3 mb-4">
                         <div class="col-md-6">
                             <label class="form-label text-white small text-uppercase fw-bold">ISBN / รหัสสินค้า</label>
-                            <input type="text" name="isbn" class="form-control" value="<?php echo htmlspecialchars($book['isbn']); ?>" required>
+                            <input type="text" name="isbn" class="form-control" value="<?php echo htmlspecialchars($book['isbn'], ENT_QUOTES, 'UTF-8'); ?>" required>
                             <div class="form-text text-white-50 small">ใส่ขีด - หากไม่มีรหัส</div>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label text-white small text-uppercase fw-bold">หมวดหมู่</label>
                             <select name="category_id" class="form-select" required>
                                 <?php foreach ($categories as $cat): ?>
-                                    <option value="<?php echo $cat['category_id']; ?>" <?php echo ($cat['category_id'] == $book['category_id']) ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($cat['category_name']); ?>
+                                    <option value="<?php echo htmlspecialchars($cat['category_id'], ENT_QUOTES, 'UTF-8'); ?>" <?php echo ($cat['category_id'] == $book['category_id']) ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8'); ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -188,26 +192,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <div class="mb-4">
                         <label class="form-label text-white small text-uppercase fw-bold">ชื่อหนังสือ</label>
-                        <input type="text" name="title" class="form-control" value="<?php echo htmlspecialchars($book['title']); ?>" required>
+                        <input type="text" name="title" class="form-control" value="<?php echo htmlspecialchars($book['title'], ENT_QUOTES, 'UTF-8'); ?>" required>
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label text-white small text-uppercase fw-bold">ผู้แต่ง</label>
-                        <input type="text" name="author" class="form-control" value="<?php echo htmlspecialchars($book['author']); ?>" required>
+                        <input type="text" name="author" class="form-control" value="<?php echo htmlspecialchars($book['author'], ENT_QUOTES, 'UTF-8'); ?>" required>
                     </div>
 
                     <div class="row g-3 mb-4">
                         <div class="col-md-4">
                             <label class="form-label text-white small text-uppercase fw-bold">ราคา (บาท)</label>
-                            <input type="number" step="0.01" name="price" id="priceInput" class="form-control" value="<?php echo $book['price']; ?>" required>
+                            <input type="number" step="0.01" name="price" id="priceInput" class="form-control" value="<?php echo htmlspecialchars($book['price'], ENT_QUOTES, 'UTF-8'); ?>" required>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label text-white small text-uppercase fw-bold">ส่วนลด (%)</label>
-                            <input type="number" name="discount_percent" id="discountInput" class="form-control" min="0" max="100" value="<?php echo $book['discount_percent']; ?>">
+                            <input type="number" name="discount_percent" id="discountInput" class="form-control" min="0" max="100" value="<?php echo htmlspecialchars($book['discount_percent'], ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <div class="col-md-4">
                             <label class="form-label text-white small text-uppercase fw-bold">สต็อกคงเหลือ</label>
-                            <input type="number" name="stock_quantity" class="form-control" value="<?php echo $book['stock_quantity']; ?>" required>
+                            <input type="number" name="stock_quantity" class="form-control" value="<?php echo htmlspecialchars($book['stock_quantity'], ENT_QUOTES, 'UTF-8'); ?>" required>
                         </div>
                     </div>
 
@@ -220,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <div class="mb-0">
                         <label class="form-label text-white small text-uppercase fw-bold">เรื่องย่อ / รายละเอียด</label>
-                        <textarea name="description" class="form-control" rows="5"><?php echo htmlspecialchars($book['description']); ?></textarea>
+                        <textarea name="description" class="form-control" rows="5"><?php echo htmlspecialchars($book['description'], ENT_QUOTES, 'UTF-8'); ?></textarea>
                     </div>
                 </div>
 

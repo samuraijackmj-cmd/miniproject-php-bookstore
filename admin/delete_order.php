@@ -9,6 +9,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
 }
 
 require_once '../config/db.php';
+require_once '../includes/csrf_helper.php';
+csrf_generate();
 
 // ตรวจสอบว่ามีการส่ง order_id มาหรือไม่
 if (!isset($_POST['order_id']) || empty($_POST['order_id'])) {

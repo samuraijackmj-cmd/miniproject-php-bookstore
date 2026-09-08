@@ -4,11 +4,14 @@ date_default_timezone_set('Asia/Bangkok');
 
 session_start();
 require_once 'config/db.php';
+require_once 'includes/csrf_helper.php';
+csrf_generate();
 
 $message = '';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    csrf_verify();
     $email = trim($_POST['email']);
 
     try {
@@ -119,6 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php if($error): ?><div class="error-msg"><?php echo $error; ?></div><?php endif; ?>
 
         <form method="POST">
+            <?= csrf_field() ?>
             <div class="input-group-custom">
                 <i class="fas fa-envelope input-icon"></i>
                 <input type="email" name="email" class="form-control" placeholder="อีเมลของคุณ" required>

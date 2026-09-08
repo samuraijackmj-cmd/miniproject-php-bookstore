@@ -314,10 +314,10 @@ $top_selling = $conn->query("SELECT b.title, b.image, SUM(oi.quantity) as total_
                     <div class="d-flex flex-column gap-2">
                         <?php foreach($low_stock_items as $item): ?>
                         <div class="d-flex align-items-center gap-3 p-2 rounded-3 bg-dark border border-secondary">
-                            <img src="../uploads/<?php echo $item['image']; ?>" class="rounded-2" style="width:35px; height:45px; object-fit:cover;">
+                            <img src="../uploads/<?php echo htmlspecialchars($item['image'], ENT_QUOTES, 'UTF-8'); ?>" class="rounded-2" style="width:35px; height:45px; object-fit:cover;">
                             <div class="flex-grow-1 text-truncate">
-                                <div class="fw-bold text-white small"><?php echo htmlspecialchars($item['title']); ?></div>
-                                <div class="text-danger small fw-bold">เหลือ: <?php echo $item['stock_quantity']; ?> เล่ม</div>
+                                <div class="fw-bold text-white small"><?php echo htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8'); ?></div>
+                                <div class="text-danger small fw-bold">เหลือ: <?php echo htmlspecialchars($item['stock_quantity'], ENT_QUOTES, 'UTF-8'); ?> เล่ม</div>
                             </div>
                         </div>
                         <?php endforeach; ?>
@@ -333,10 +333,10 @@ $top_selling = $conn->query("SELECT b.title, b.image, SUM(oi.quantity) as total_
                     <?php $rank = 1; foreach($top_selling as $ts): ?>
                     <div class="d-flex align-items-center gap-3 p-2 rounded-3 hover-bg-light">
                         <div class="badge bg-warning text-dark rounded-circle shadow-sm" style="width:24px; height:24px; display:flex; align-items:center; justify-content:center;"><?php echo $rank++; ?></div>
-                        <img src="../uploads/<?php echo $ts['image']; ?>" class="rounded-2" style="width:35px; height:45px; object-fit:cover;">
+                        <img src="../uploads/<?php echo htmlspecialchars($ts['image'], ENT_QUOTES, 'UTF-8'); ?>" class="rounded-2" style="width:35px; height:45px; object-fit:cover;">
                         <div class="flex-grow-1 overflow-hidden">
-                            <div class="fw-bold text-white small text-truncate"><?php echo htmlspecialchars($ts['title']); ?></div>
-                            <div class="text-muted small"><?php echo $ts['total_qty']; ?> sold</div>
+                            <div class="fw-bold text-white small text-truncate"><?php echo htmlspecialchars($ts['title'], ENT_QUOTES, 'UTF-8'); ?></div>
+                            <div class="text-muted small"><?php echo htmlspecialchars($ts['total_qty'], ENT_QUOTES, 'UTF-8'); ?> sold</div>
                         </div>
                     </div>
                     <?php endforeach; ?>

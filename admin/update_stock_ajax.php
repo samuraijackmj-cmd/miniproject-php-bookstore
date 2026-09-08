@@ -6,6 +6,8 @@ if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
 // ⚠️ เช็ค Path ให้ถูก: ถ้าไฟล์นี้อยู่ใน folder "admin" ต้องถอยกลับ 1 ขั้น (../) เพื่อหา config
 require_once '../config/db.php';
+require_once '../includes/csrf_helper.php';
+csrf_generate();
 
 // ✅ สำคัญ: ล้าง Buffer ก่อนส่ง Header เพื่อให้แน่ใจว่าไม่มีช่องว่างหรือ Error หลุดไปใน JSON
 ob_end_clean(); 

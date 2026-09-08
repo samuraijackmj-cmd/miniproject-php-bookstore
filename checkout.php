@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once 'config/db.php';
+require_once 'includes/csrf_helper.php';
+csrf_generate();
 
 // ตรวจสอบไฟล์ QR Helper
 if (file_exists('includes/qr_helper.php')) {
@@ -195,6 +197,7 @@ $cod_fee = 50;
         <h2 class="fw-bold text-white text-center mb-4 animate__animated animate__fadeInDown">ยืนยันการสั่งซื้อ</h2>
 
         <form action="save_order.php" method="POST" enctype="multipart/form-data" id="checkoutForm">
+    <?= csrf_field() ?>
             <div class="row g-4">
                 <div class="col-lg-7">
                     <div class="modern-card animate__animated animate__fadeInUp">

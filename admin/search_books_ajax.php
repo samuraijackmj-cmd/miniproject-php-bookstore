@@ -49,15 +49,15 @@ if (count($books) > 0):
             $img_style = '';
         }
         ?>
-        <tr id="row-<?= $book['book_id'] ?>">
+        <tr id="row-<?= htmlspecialchars($book['book_id'], ENT_QUOTES, 'UTF-8') ?>">
             <td class="ps-4">
                 <div class="d-flex align-items-center gap-3">
                     <span class="text-muted font-monospace small" style="min-width: 110px; display: inline-block;">
-                        <?= !empty($book['isbn']) ? htmlspecialchars($book['isbn']) : '-' ?>
+                        <?= !empty($book['isbn']) ? htmlspecialchars($book['isbn'], ENT_QUOTES, 'UTF-8') : '-' ?>
                     </span>
                     
                     <img src="../uploads/<?= !empty($book['image']) ? $book['image'] : 'no-image.jpg' ?>" 
-                         id="img-<?= $book['book_id'] ?>"
+                         id="img-<?= htmlspecialchars($book['book_id'], ENT_QUOTES, 'UTF-8') ?>"
                          class="rounded shadow-sm" 
                          style="width:45px; height:60px; object-fit:cover; transition: 0.3s; <?= $img_style ?>">
                 </div>
@@ -65,12 +65,12 @@ if (count($books) > 0):
 
             <td>
                 <div class="fw-bold text-white mb-1">
-                    <?= htmlspecialchars($book['title']) ?>
-                    <span id="badge-<?= $book['book_id'] ?>"><?= $badge_html ?></span>
+                    <?= htmlspecialchars($book['title'], ENT_QUOTES, 'UTF-8') ?>
+                    <span id="badge-<?= htmlspecialchars($book['book_id'], ENT_QUOTES, 'UTF-8') ?>"><?= $badge_html ?></span>
                 </div>
                 <div class="badge rounded-pill fw-normal" 
                      style="background: rgba(92, 103, 242, 0.1); color: #7c83ff; border: 1px solid rgba(92, 103, 242, 0.2);">
-                    <?= htmlspecialchars($book['category_name'] ?? 'General') ?>
+                    <?= htmlspecialchars($book['category_name'] ?? 'General', ENT_QUOTES, 'UTF-8') ?>
                 </div>
             </td>
 
@@ -78,17 +78,17 @@ if (count($books) > 0):
                 <div class="d-flex align-items-center justify-content-center gap-2" 
                      style="background: rgba(255,255,255,0.03); padding: 4px 8px; border-radius: 50px; width: fit-content; margin: 0 auto; border: 1px solid rgba(255,255,255,0.05);">
                     
-                    <button type="button" onclick="updateStock(<?= $book['book_id'] ?>, 'decrease')" 
+                    <button type="button" onclick="updateStock(<?= htmlspecialchars($book['book_id'], ENT_QUOTES, 'UTF-8') ?>, 'decrease')" 
                             class="btn btn-sm text-white p-0 d-flex align-items-center justify-content-center hover-scale" 
                             style="width: 24px; height: 24px; border-radius: 50%;">
                         <i class="bi bi-dash"></i>
                     </button>
                     
-                    <span id="stock-<?= $book['book_id'] ?>" class="fw-bold mx-2" style="font-size: 1.1rem; min-width: 25px; <?= $stock_color ?>">
+                    <span id="stock-<?= htmlspecialchars($book['book_id'], ENT_QUOTES, 'UTF-8') ?>" class="fw-bold mx-2" style="font-size: 1.1rem; min-width: 25px; <?= $stock_color ?>">
                         <?= $stock ?>
                     </span>
                     
-                    <button type="button" onclick="updateStock(<?= $book['book_id'] ?>, 'increase')" 
+                    <button type="button" onclick="updateStock(<?= htmlspecialchars($book['book_id'], ENT_QUOTES, 'UTF-8') ?>, 'increase')" 
                             class="btn btn-sm text-white p-0 d-flex align-items-center justify-content-center hover-scale" 
                             style="width: 24px; height: 24px; border-radius: 50%;">
                         <i class="bi bi-plus"></i>
@@ -102,13 +102,13 @@ if (count($books) > 0):
 
             <td class="text-end pe-4">
                 <div class="action-btns">
-                    <a href="book_edit.php?id=<?= $book['book_id'] ?>" class="btn-action btn-edit" title="แก้ไข">
+                    <a href="book_edit.php?id=<?= htmlspecialchars($book['book_id'], ENT_QUOTES, 'UTF-8') ?>" class="btn-action btn-edit" title="แก้ไข">
                         <i class="bi bi-pencil-square"></i>
                     </a>
-                    <a href="book_delete.php?id=<?= $book['book_id'] ?>" 
+                    <a href="book_delete.php?id=<?= htmlspecialchars($book['book_id'], ENT_QUOTES, 'UTF-8') ?>" 
                        class="btn-action btn-delete" 
                        title="ลบ" 
-                       onclick="return confirm('ยืนยันการลบหนังสือ: <?= htmlspecialchars($book['title']) ?> ?');">
+                       onclick="return confirm('ยืนยันการลบหนังสือ: <?= htmlspecialchars($book['title'], ENT_QUOTES, 'UTF-8') ?> ?');">
                         <i class="bi bi-trash"></i>
                     </a>
                 </div>

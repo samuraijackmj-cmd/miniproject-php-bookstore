@@ -24,7 +24,7 @@ $items = $stmt->fetchAll();
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Invoice - <?php echo $order['order_number']; ?></title>
+    <title>Invoice - <?php echo htmlspecialchars($order['order_number'], ENT_QUOTES, 'UTF-8'); ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap');
@@ -60,8 +60,8 @@ $items = $stmt->fetchAll();
         <div class="row mb-4">
             <div class="col-12">
                 <h6 class="fw-bold">ข้อมูลลูกค้า (ที่อยู่จัดส่ง)</h6>
-                <p class="m-0"><?php echo htmlspecialchars($order['full_name']); ?> (<?php echo htmlspecialchars($order['phone']); ?>)</p>
-                <p class="m-0 text-muted"><?php echo nl2br(htmlspecialchars($order['address'])); ?></p>
+                <p class="m-0"><?php echo htmlspecialchars($order['full_name'], ENT_QUOTES, 'UTF-8'); ?> (<?php echo htmlspecialchars($order['phone'], ENT_QUOTES, 'UTF-8'); ?>)</p>
+                <p class="m-0 text-muted"><?php echo nl2br(htmlspecialchars($order['address'], ENT_QUOTES, 'UTF-8')); ?></p>
             </div>
         </div>
 
@@ -79,9 +79,9 @@ $items = $stmt->fetchAll();
                 <?php $i=1; foreach($items as $item): ?>
                 <tr>
                     <td class="text-center"><?php echo $i++; ?></td>
-                    <td><?php echo htmlspecialchars($item['title']); ?></td>
+                    <td><?php echo htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td class="text-end">฿<?php echo number_format($item['price'], 2); ?></td>
-                    <td class="text-center"><?php echo $item['quantity']; ?></td>
+                    <td class="text-center"><?php echo htmlspecialchars($item['quantity'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td class="text-end fw-bold">฿<?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
                 </tr>
                 <?php endforeach; ?>
