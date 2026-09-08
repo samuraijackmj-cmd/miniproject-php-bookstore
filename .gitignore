@@ -1,5 +1,22 @@
+# Database config (ห้าม upload!)
+/config/db.php
+
+# ไฟล์ upload รูปภาพ
 /uploads/
-/config/
+
+# Dependencies
 /vendor/
+
+# Logs
 *.log
+
+# Environment
 .env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
